@@ -23,6 +23,7 @@ from factory.fuzzy import FuzzyChoice, FuzzyDecimal
 from service.models import Product, Category
 
 
+
 class ProductFactory(factory.Factory):
     """Creates fake products for testing"""
 
@@ -32,8 +33,32 @@ class ProductFactory(factory.Factory):
         model = Product
 
     id = factory.Sequence(lambda n: n)
-    name = factory.Faker("word")
+    name = FuzzyChoice(
+        choices=[
+            "Hat",
+            "Pants",
+            "Shirt",
+            "Apple",
+            "Banana",
+            "Pots",
+            "Towels",
+            "Ford",
+            "Chevy",
+            "Hammer",
+            "Wrench",
+        ]
+    )
     description = factory.Faker("text")
-    price = FuzzyDecimal(0.5, 1000.0, precision=2)
-    available = factory.Faker("boolean")
-    category = FuzzyChoice(list(Category))
+    price = FuzzyDecimal(0.5, 2000.0, 2)
+    available = FuzzyChoice(choices=[True, False])
+    category = FuzzyChoice(
+        choices=[
+            Category.UNKNOWN,
+            Category.CLOTHS,
+            Category.FOOD,
+            Category.HOUSEWARES,
+            Category.AUTOMOTIVE,
+            Category.TOOLS,
+        ]
+    )
+
