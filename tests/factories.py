@@ -1,3 +1,4 @@
+
 # Copyright 2016, 2022 John J. Rofrano. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,4 +32,8 @@ class ProductFactory(factory.Factory):
         model = Product
 
     id = factory.Sequence(lambda n: n)
-   ## Add code to create Fake Products 
+    name = factory.Faker("word")
+    description = factory.Faker("text")
+    price = FuzzyDecimal(0.5, 1000.0, precision=2)
+    available = factory.Faker("boolean")
+    category = FuzzyChoice(list(Category))
